@@ -1,45 +1,36 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <stdbool.h>
 
-bool primos(unsigned);
+#define TAM 60101
 
-void main(){
-	unsigned peso, velocidade = 0;
-	unsigned short contador = 0;
-	unsigned horas, dias;
-
-	scanf("%u", &peso);
-
-	while (contador < 10){
-		if (primos(peso)){
-			velocidade += peso;
-			peso++;
+int main(){
+	unsigned int peso, i, j, contador = 0, soma = 0, horas;
+	unsigned int primos[TAM];
+	float raiz;
+	scanf("%d", &peso);
+	raiz = sqrt(peso);
+	for(i = 2; i <= TAM; i++){
+		primos[i] = i;
+	}
+	primos[0] = 0;
+	primos[1] = 0;
+	for(i = 2; i <= raiz; i++){
+		if(primos[i] == i){
+			for (j = i + i; j <= TAM; j += i){
+				primos[j] = 0;
+			}
+		}
+	}
+	for(i = 2; i <= TAM; i++){
+		if(primos[i] != 0 && primos[i] >= peso && contador < 10){
+			soma += primos[i];
 			contador++;
-		}else{
-			peso++;
 		}
 	}
-	horas = (60000000 / velocidade);
-	dias = (horas / 24);
-
-	printf("%u km/h\n", velocidade);
-	printf("%u h / %u d\n", horas,  dias);
-}
-
-bool primos(unsigned numero){
-	unsigned i;
-	unsigned limite;
-
-	limite = sqrt(numero);
-
-	if (numero % 2 == 0 && numero != 2 || numero == 1){
-		return false;
-	}
-	for (i = 3; i <= limite; i++){
-		if (numero % i == 0){
-			return false;
-		}
-	}
-	return true;
+	printf("%d km/h\n", soma);
+	horas = 60000000/soma;
+	printf("%d h / %d d", horas, horas/24);
+	printf("\n");
+	return 0;
 }
