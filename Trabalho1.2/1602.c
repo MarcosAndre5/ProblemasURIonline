@@ -17,8 +17,10 @@ void main(){
 void hiperPrimos(){
 	unsigned i, j;
 	unsigned numDivisores, tam;
+
 	memset(primos, true, sizeof(primos));
 	memset(divisores, 0, sizeof(divisores));
+
 	for (i = 2; i < TAM; i++){
 		if (primos[i]){
 			divisores[i] = 2;
@@ -38,7 +40,9 @@ void hiperPrimos(){
 			}
 		}
 	}
+
 	qtdHiperPrimos[1] = 0;
+	
 	for (i = 2; i <= TAM; i++){
 		qtdHiperPrimos[i] = qtdHiperPrimos[i - 1];
 		if (primos[divisores[i]]){
